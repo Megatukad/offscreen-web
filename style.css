@@ -452,12 +452,24 @@
   border-top: 1px solid var(--color-border);
   gap: var(--space-5);
 }
-.nav-mobile a {
+.nav-mobile a:not(.btn) {
   font-size: var(--text-base);
   font-weight: 500;
   color: var(--color-text);
   text-decoration: none;
   padding-block: var(--space-2);
+}
+
+/* Mobile nav CTA — fixed light bg + dark text in both color schemes */
+.nav-mobile .btn-primary {
+  background: #F4F1EA;
+  color: #1C1C1A;
+  border-color: #F4F1EA;
+}
+.nav-mobile .btn-primary:hover {
+  background: var(--mauve-dim);
+  border-color: var(--mauve-dim);
+  color: #F4F1EA;
 }
 .nav-mobile.is-open { display: flex; }
 
