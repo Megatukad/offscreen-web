@@ -792,6 +792,11 @@
   border-right: none;
   margin-block: var(--space-12) var(--space-8);
 }
+/* When the full-bleed image is the last thing in Proof, let it run
+   flush into the next section instead of leaving dead space below. */
+.proof:has(.proof-ph-bleed-end) {
+  padding-bottom: 0;
+}
 
 /* Proof closing body */
 .proof-body {
