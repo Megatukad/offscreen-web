@@ -133,32 +133,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
-
-// ── FORM SUBMISSION ──────────────────────────────
-(function () {
-  const form = document.querySelector('.contact-form');
-  if (!form) return;
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const name     = form.querySelector('#cf-name')?.value.trim();
-    const email    = form.querySelector('#cf-email')?.value.trim();
-    const business = form.querySelector('#cf-business')?.value.trim();
-    const tier     = form.querySelector('#cf-tier')?.value;
-
-    if (!name || !email) {
-      const missing = !name ? form.querySelector('#cf-name') : form.querySelector('#cf-email');
-      missing.focus();
-      missing.style.borderColor = '#A0506A';
-      setTimeout(() => { missing.style.borderColor = ''; }, 2000);
-      return;
-    }
-
-    const subject = encodeURIComponent(`Offscreen — Application from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nWhat I sell:\n${business || '—'}\n\nService interest: ${tier || '—'}\n\n---\nSent from offscreen.work`
-    );
-    window.location.href = `mailto:hello@offscreen.work?subject=${subject}&body=${body}`;
-  });
-})();

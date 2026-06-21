@@ -684,9 +684,6 @@
   padding-top: var(--space-6);
   border-top: 1px solid var(--dark-border);
 }
-.offer .section-h2 {
-  font-size: var(--text-2xl);
-}
 .offer .offer-component-name {
   font-size: var(--text-base);
 }
@@ -699,10 +696,11 @@
   padding-block: clamp(var(--space-8), 4vw, var(--space-14));
 }
 
+/* All section headings share one size (base .section-h2 = --text-3xl).
+   Keep the tighter bottom margin these sections used. */
 .outcomes .section-h2,
 .pricing .section-h2,
 .process .section-h2 {
-  font-size: var(--text-xl);
   margin-bottom: var(--space-3);
 }
 .pricing .section-intro { font-size: var(--text-sm); margin-bottom: var(--space-6); }
@@ -1364,6 +1362,74 @@
   padding-top: var(--space-2);
 }
 
+/* ── PRICING: single offer ──────────────────────── */
+.pricing-single {
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: var(--space-10);
+}
+.pricing-single .pricing-list li {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.pricing-single .pricing-list li strong {
+  font-weight: 700;
+  color: var(--dark-text);
+}
+.pricing-price-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--mauve-light);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  margin-top: var(--space-2);
+  max-width: 32ch;
+}
+
+/* ── PRICING: for / not-for ─────────────────────── */
+.pricing-fit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8) var(--space-12);
+}
+.fit-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mauve-light);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--dark-border);
+}
+.fit-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+.fit-list li {
+  position: relative;
+  padding-left: var(--space-8);
+  font-size: var(--text-sm);
+  color: var(--dark-text);
+  line-height: 1.5;
+}
+/* Marks read from shape (check vs cross), not color — both stay in the
+   site mauve palette, never green/red. */
+.fit-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: var(--text-base);
+  line-height: 1.35;
+  color: var(--mauve-light);
+}
+.fit-list-for li::before  { content: '✓'; }
+.fit-list-not li::before  { content: '✗'; color: var(--dark-muted); }
+.fit-list-not li { color: var(--dark-muted); }
+
 /* ── FAQ ────────────────────────────────────────── */
 .faq-list {
   display: flex;
@@ -1433,6 +1499,10 @@ details[open] .faq-q::after {
   margin-bottom: var(--space-12);
   max-width: 50ch;
   line-height: 1.6;
+}
+
+.final-cta-action {
+  margin-bottom: var(--space-10);
 }
 
 .contact-form {
@@ -1597,6 +1667,7 @@ details[open] .faq-q::after {
   .outcomes-blocks { grid-template-columns: 1fr; }
   .about-body { grid-template-columns: 1fr; }
   .pricing-tiers { grid-template-columns: 1fr; }
+  .pricing-fit { grid-template-columns: 1fr; gap: var(--space-8); }
   .vsys-palette { grid-template-columns: repeat(3, 1fr); }
   .vsys-mood { grid-template-columns: repeat(2, 1fr); }
   .pricing-tier-foot { flex-direction: column; align-items: flex-start; gap: var(--space-5); }
