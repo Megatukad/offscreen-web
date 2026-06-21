@@ -279,6 +279,7 @@
 .btn-lg { padding: 1em 2em; font-size: var(--text-base); }
 .btn-block { width: 100%; }
 
+/* Action-forward arrow on primary CTAs */
 .btn-arrow {
   display: inline-block;
   transition: transform var(--t-base);
@@ -297,6 +298,8 @@
 }
 
 /* ── INDEXED LABEL SIGNATURE ─────────────────────── */
+/* A short accent rule precedes every section label, turning the eyebrows and
+   section numbers into a confident, directory-style index across the page. */
 .eyebrow,
 .section-num {
   display: flex;
@@ -316,6 +319,9 @@
 }
 
 /* ── REVEAL ANIMATIONS ──────────────────────────── */
+/* Content is visible by default. The hidden-then-animate state is opted into
+   only when JS adds .js-reveal to <html>, so the page is never blank if the
+   script or the IntersectionObserver fails to run (e.g. in preview frames). */
 .reveal {
   transition: opacity var(--t-slow), transform var(--t-slow);
 }
@@ -327,9 +333,8 @@
   opacity: 1;
   transform: translateY(0);
 }
-.reveal-delay   { transition-delay: 160ms; }
+.reveal-delay { transition-delay: 160ms; }
 .reveal-delay-2 { transition-delay: 320ms; }
-.reveal-delay-3 { transition-delay: 480ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
@@ -382,6 +387,8 @@
   height: clamp(15px, 1.4vw, 18px);
   width: auto;
 }
+/* Logo color logic: light wordmark over the hero, dark when the bar fills
+   in on a light surface; flips again in dark theme. */
 .nav-logo-dark { display: none; }
 .nav.is-scrolled .nav-logo-light { display: none; }
 .nav.is-scrolled .nav-logo-dark { display: block; }
@@ -424,6 +431,7 @@
 }
 .nav-theme-toggle:hover { color: rgba(255,253,248,1); }
 .nav.is-scrolled .nav-theme-toggle { color: var(--color-text-muted); }
+.nav.is-scrolled .nav-theme-toggle { color: var(--color-text-muted); }
 .nav.is-scrolled .nav-theme-toggle:hover { color: var(--color-text); background: var(--paper-dark); }
 
 .nav-hamburger {
@@ -452,24 +460,12 @@
   border-top: 1px solid var(--color-border);
   gap: var(--space-5);
 }
-.nav-mobile a:not(.btn) {
+.nav-mobile a {
   font-size: var(--text-base);
   font-weight: 500;
   color: var(--color-text);
   text-decoration: none;
   padding-block: var(--space-2);
-}
-
-/* Mobile nav CTA — fixed light bg + dark text in both color schemes */
-.nav-mobile .btn-primary {
-  background: #F4F1EA;
-  color: #1C1C1A;
-  border-color: #F4F1EA;
-}
-.nav-mobile .btn-primary:hover {
-  background: var(--mauve-dim);
-  border-color: var(--mauve-dim);
-  color: #F4F1EA;
 }
 .nav-mobile.is-open { display: flex; }
 
@@ -709,6 +705,7 @@
 .pricing {
   padding-block: clamp(var(--space-16), 8vw, var(--space-24));
 }
+/* Remove intro margin-bottom for process */
 .process .section-intro {
   margin-bottom: var(--space-8);
 }
@@ -734,6 +731,7 @@
   border-left: 2px solid var(--color-accent);
 }
 
+/* Proof list — Offer-style two-column list */
 .proof-list {
   list-style: none;
   padding: 0;
@@ -761,6 +759,7 @@
   background: var(--color-accent);
 }
 
+/* Proof placeholders */
 .proof-ph {
   display: flex;
   align-items: center;
@@ -794,6 +793,7 @@
   margin-block: var(--space-12) var(--space-8);
 }
 
+/* Proof closing body */
 .proof-body {
   font-size: var(--text-base);
   color: var(--color-text-muted);
@@ -810,7 +810,7 @@
   margin-top: var(--space-10);
 }
 
-/* ── MIKA GALLERY (2×2 grid) ────────────────────── */
+/* ── MIKA GALLERY (2×2 placeholder grid) ────────── */
 .mika-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1117,6 +1117,7 @@
   gap: 0;
   position: relative;
 }
+/* connector line between steps */
 .process-steps::before {
   content: '';
   position: absolute;
@@ -1158,7 +1159,7 @@
   font-size: var(--text-sm);
   color: var(--dark-muted);
   line-height: 1.5;
-  display: none;
+  display: none; /* hidden in 5-col horizontal layout; shown on mobile */
 }
 .process-step-out {
   font-family: var(--font-mono);
@@ -1303,6 +1304,7 @@
   margin-right: 0.06em;
 }
 
+/* Shared block below both tiers */
 .pricing-shared {
   display: flex;
   flex-direction: column;
@@ -1565,20 +1567,10 @@ details[open] .faq-q::after {
   color: var(--dark-muted);
   letter-spacing: 0.04em;
 }
-.final-friction p a {
-  color: var(--dark-text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(232,229,223,0.3);
-  transition: text-decoration-color var(--t-fast);
-}
-.final-friction p a:hover {
-  text-decoration-color: rgba(232,229,223,0.8);
-}
 
 /* ── FOOTER ─────────────────────────────────────── */
 .footer {
-  background: #111110;
+  background: var(--ink);
   border-top: 1px solid rgba(244,241,234,0.08);
   padding-block: var(--space-12);
 }
@@ -1693,124 +1685,4 @@ details[open] .faq-q::after {
   .cos-pillars { grid-template-columns: 1fr; }
   .vsys-palette { grid-template-columns: repeat(2, 1fr); }
   .cos-tr { font-size: var(--text-xs); padding: var(--space-3); gap: var(--space-2); }
-}
-
-
-/* ═══════════════════════════════════════════════════
-   GALLERY — LUXURY MOTION
-   Rounded corners matching brand button radius.
-   Ken Burns ambient drift + editorial hover.
-═══════════════════════════════════════════════════ */
-
-/* Rounded corners + clip context */
-.mika-gallery-cell {
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  position: relative;
-  border: none; /* remove flat border; depth comes from the image itself */
-}
-
-/* Ink veil that surfaces on hover — editorial restraint */
-.mika-gallery-cell::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: rgba(28, 26, 22, 0);
-  transition: background 900ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.mika-gallery-cell:hover::after {
-  background: rgba(28, 26, 22, 0.1);
-}
-
-/* Inner wrapper carries the Ken Burns animation.
-   Separating it from the image lets the hover scale
-   live on the img without conflicting with the ambient
-   animation on the parent. */
-.gallery-img-inner {
-  width: 100%;
-  height: 100%;
-  transform-origin: center center;
-  will-change: transform;
-}
-
-/* Image hover — smooth scale with luxury timing */
-.gallery-img-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-.mika-gallery-cell:hover .gallery-img-inner img {
-  transform: scale(1.07);
-  filter: brightness(1.04) saturate(1.05);
-}
-
-/* Pause Ken Burns on hover so the image holds its
-   current position while the scale transition plays */
-.mika-gallery-cell:hover .gallery-img-inner {
-  animation-play-state: paused;
-}
-
-/* Ken Burns — slow ambient drift, unique per cell.
-   Start at scale(1.02) so translate never shows edges. */
-.mika-gallery-cell:nth-child(1) .gallery-img-inner {
-  animation: galleryDrift1 20s ease-in-out infinite alternate;
-}
-.mika-gallery-cell:nth-child(2) .gallery-img-inner {
-  animation: galleryDrift2 25s ease-in-out infinite alternate;
-  animation-delay: -8s;
-}
-.mika-gallery-cell:nth-child(3) .gallery-img-inner {
-  animation: galleryDrift3 18s ease-in-out infinite alternate;
-  animation-delay: -5s;
-}
-.mika-gallery-cell:nth-child(4) .gallery-img-inner {
-  animation: galleryDrift4 22s ease-in-out infinite alternate;
-  animation-delay: -14s;
-}
-
-@keyframes galleryDrift1 {
-  from { transform: scale(1.02) translate(0,    0); }
-  to   { transform: scale(1.06) translate(-1%,  -0.6%); }
-}
-@keyframes galleryDrift2 {
-  from { transform: scale(1.06) translate(0.8%,  0.4%); }
-  to   { transform: scale(1.02) translate(-0.4%, 0); }
-}
-@keyframes galleryDrift3 {
-  from { transform: scale(1.02) translate(-0.5%, 0.5%); }
-  to   { transform: scale(1.06) translate(0.8%,  -0.8%); }
-}
-@keyframes galleryDrift4 {
-  from { transform: scale(1.05) translate(0.3%,  -0.5%); }
-  to   { transform: scale(1.02) translate(-0.8%,  0.3%); }
-}
-
-/* Staggered luxury entrance — slower, deeper translateY
-   than the generic .reveal, giving the grid a sequential
-   unveiling feel as it scrolls into view. */
-.mika-gallery .mika-gallery-cell.reveal {
-  transition: opacity  1000ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.js-reveal .mika-gallery .mika-gallery-cell.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-}
-.js-reveal .mika-gallery .mika-gallery-cell.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Accessibility: respect motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .gallery-img-inner            { animation: none !important; }
-  .gallery-img-inner img        { transition: none !important; }
-  .mika-gallery-cell::after     { transition: none !important; }
-  .mika-gallery-cell:hover .gallery-img-inner img { transform: none; filter: none; }
 }

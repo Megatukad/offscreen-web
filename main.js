@@ -5,6 +5,7 @@
   const root = document.documentElement;
   const toggles = document.querySelectorAll('[data-theme-toggle]');
 
+  // Detect system preference (no localStorage)
   let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   root.setAttribute('data-theme', currentTheme);
   updateToggleIcon(currentTheme);
@@ -44,6 +45,7 @@
     document.body.style.overflow = open ? 'hidden' : '';
   });
 
+  // Close on link click
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       open = false;
@@ -55,6 +57,7 @@
     });
   });
 
+  // Hamburger animation
   const style = document.createElement('style');
   style.textContent = `
     .nav-hamburger.is-open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
@@ -73,10 +76,17 @@
   const revealAll = () => pending.forEach(el => el.classList.add('is-visible'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Progressive enhancement: content is visible by default (see .reveal in CSS).
+  // We only opt into the hidden-then-animate state once JS is running and able
+  // to reveal it again. If motion is reduced, just show everything immediately.
   if (reduceMotion) { revealAll(); return; }
 
   root.classList.add('js-reveal');
 
+  // Reveal on a scroll-position check rather than IntersectionObserver. Scroll
+  // and resize events fire reliably across browsers and embedded preview frames,
+  // where IntersectionObserver sometimes reports the initial state but never
+  // updates on scroll, leaving lower sections permanently hidden.
   const check = () => {
     const vh = window.innerHeight || document.documentElement.clientHeight;
     pending = pending.filter(el => {
@@ -104,10 +114,14 @@
   window.addEventListener('resize', onScroll, { passive: true });
   window.addEventListener('load', onScroll);
 
+  // Reveal whatever is in the initial viewport. Re-check after the first frame
+  // and a short delay too, in case layout (and getBoundingClientRect) isn't
+  // settled on the very first pass — keeps the first screenful from flashing.
   check();
   requestAnimationFrame(check);
   setTimeout(check, 300);
 
+  // Last-resort safety: never leave content hidden if scroll events don't fire.
   setTimeout(() => { if (pending.length) revealAll(); }, 4000);
 })();
 
