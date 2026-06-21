@@ -97,36 +97,43 @@
   --shadow-lg: 0 12px 40px rgba(28,28,26,0.12);
 }
 
-/* Dark mode */
+/* Dark mode
+   The page alternates light panels (.section) with dark panels (.section-dark).
+   In dark mode we keep that rhythm by giving the two panel types CLEARLY
+   different dark surfaces: light panels become a raised charcoal, dark panels
+   become a deep near-black. Muted text and accents are brightened so they stay
+   legible on the darker grounds. */
 [data-theme="dark"] {
-  --paper:        #111110;
-  --paper-dark:   #181816;
-  --paper-border: #2A2A28;
-  --ink:          #E8E5DF;
-  --ink-muted:    #A0A09C;
-  --ink-faint:    #606060;
+  /* Light panels (.section) → raised charcoal surface */
+  --paper:        #242320;
+  --paper-dark:   #302E2A;
+  --paper-border: #3A3934;
+  --ink:          #ECE9E3;
+  --ink-muted:    #ABA9A2;
+  --ink-faint:    #78766F;
   --mauve:        #8B7589;
-  --mauve-light:  #A897A5;
+  --mauve-light:  #B7A2B4;
   --mauve-dim:    #6B5568;
   --mauve-tint:   #2A2028;
-  --white:        #1A1A18;
+  --white:        #302E2A;
 
-  --color-bg:          #111110;
-  --color-surface:     #1A1A18;
-  --color-border:      #2A2A28;
-  --color-text:        #E8E5DF;
-  --color-text-muted:  #A0A09C;
-  --color-text-faint:  #606060;
-  --color-accent:      #8B7589;
-  --color-accent-hover:#A897A5;
+  --color-bg:          #242320;
+  --color-surface:     #302E2A;
+  --color-border:      #3D3C37;
+  --color-text:        #ECE9E3;
+  --color-text-muted:  #ABA9A2;
+  --color-text-faint:  #78766F;
+  --color-accent:      #B7A2B4;
+  --color-accent-hover:#CBB8C8;
   --color-accent-tint: #2A2028;
 
-  --dark-bg:      #0C0C0A;
-  --dark-surface: #111110;
-  --dark-border:  #1E1E1C;
-  --dark-text:    #E8E5DF;
-  --dark-muted:   #7A7A76;
-  --dark-faint:   #333332;
+  /* Dark panels (.section-dark) → deep near-black */
+  --dark-bg:      #0D0D0B;
+  --dark-surface: #181715;
+  --dark-border:  #2C2B27;
+  --dark-text:    #ECE9E3;
+  --dark-muted:   #9C9A92;
+  --dark-faint:   #4A4945;
 
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
@@ -135,26 +142,33 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --paper:        #111110;
-    --paper-dark:   #181816;
-    --paper-border: #2A2A28;
-    --ink:          #E8E5DF;
-    --ink-muted:    #A0A09C;
-    --ink-faint:    #606060;
+    --paper:        #242320;
+    --paper-dark:   #302E2A;
+    --paper-border: #3D3C37;
+    --ink:          #ECE9E3;
+    --ink-muted:    #ABA9A2;
+    --ink-faint:    #78766F;
     --mauve:        #8B7589;
-    --mauve-light:  #A897A5;
+    --mauve-light:  #B7A2B4;
     --mauve-dim:    #6B5568;
     --mauve-tint:   #2A2028;
-    --white:        #1A1A18;
-    --color-bg:     #111110;
-    --color-surface:#1A1A18;
-    --color-border: #2A2A28;
-    --color-text:   #E8E5DF;
-    --color-text-muted: #A0A09C;
-    --color-text-faint: #606060;
-    --color-accent: #8B7589;
-    --color-accent-hover:#A897A5;
+    --white:        #302E2A;
+    --color-bg:     #242320;
+    --color-surface:#302E2A;
+    --color-border: #3D3C37;
+    --color-text:   #ECE9E3;
+    --color-text-muted: #ABA9A2;
+    --color-text-faint: #78766F;
+    --color-accent: #B7A2B4;
+    --color-accent-hover:#CBB8C8;
     --color-accent-tint: #2A2028;
+
+    --dark-bg:      #0D0D0B;
+    --dark-surface: #181715;
+    --dark-border:  #2C2B27;
+    --dark-text:    #ECE9E3;
+    --dark-muted:   #9C9A92;
+    --dark-faint:   #4A4945;
   }
 }
 
