@@ -349,6 +349,7 @@
 }
 .reveal-delay { transition-delay: 160ms; }
 .reveal-delay-2 { transition-delay: 320ms; }
+.reveal-delay-3 { transition-delay: 480ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
@@ -474,12 +475,26 @@
   border-top: 1px solid var(--color-border);
   gap: var(--space-5);
 }
-.nav-mobile a {
+.nav-mobile a:not(.btn) {
   font-size: var(--text-base);
   font-weight: 500;
   color: var(--color-text);
   text-decoration: none;
   padding-block: var(--space-2);
+}
+
+/* Mobile nav CTA — fixed light bg + dark text in both color schemes.
+   (The generic .nav-mobile a rule above would otherwise paint the label
+   the same color as the button fill and make it invisible.) */
+.nav-mobile .btn-primary {
+  background: #F4F1EA;
+  color: #1C1C1A;
+  border-color: #F4F1EA;
+}
+.nav-mobile .btn-primary:hover {
+  background: var(--mauve-dim);
+  border-color: var(--mauve-dim);
+  color: #F4F1EA;
 }
 .nav-mobile.is-open { display: flex; }
 
@@ -1586,10 +1601,22 @@ details[open] .faq-q::after {
   color: var(--dark-muted);
   letter-spacing: 0.04em;
 }
+.final-friction p a {
+  color: var(--dark-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(232,229,223,0.3);
+  transition: text-decoration-color var(--t-fast);
+}
+.final-friction p a:hover {
+  text-decoration-color: rgba(232,229,223,0.8);
+}
 
 /* ── FOOTER ─────────────────────────────────────── */
 .footer {
-  background: var(--ink);
+  /* Fixed dark ground in BOTH themes — do not use var(--ink), which
+     flips to near-white in dark mode and hides the light footer text. */
+  background: #111110;
   border-top: 1px solid rgba(244,241,234,0.08);
   padding-block: var(--space-12);
 }
@@ -1623,7 +1650,7 @@ details[open] .faq-q::after {
 .footer-legal {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: rgba(244,241,234,0.4);
+  color: rgba(244,241,234,0.55);
   letter-spacing: 0.04em;
 }
 .footer-ig {
@@ -1704,4 +1731,124 @@ details[open] .faq-q::after {
   .cos-pillars { grid-template-columns: 1fr; }
   .vsys-palette { grid-template-columns: repeat(2, 1fr); }
   .cos-tr { font-size: var(--text-xs); padding: var(--space-3); gap: var(--space-2); }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   GALLERY — LUXURY MOTION
+   Rounded corners matching brand button radius.
+   Ken Burns ambient drift + editorial hover.
+═══════════════════════════════════════════════════ */
+
+/* Rounded corners + clip context */
+.mika-gallery-cell {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  border: none; /* remove flat border; depth comes from the image itself */
+}
+
+/* Ink veil that surfaces on hover — editorial restraint */
+.mika-gallery-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(28, 26, 22, 0);
+  transition: background 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mika-gallery-cell:hover::after {
+  background: rgba(28, 26, 22, 0.1);
+}
+
+/* Inner wrapper carries the Ken Burns animation.
+   Separating it from the image lets the hover scale
+   live on the img without conflicting with the ambient
+   animation on the parent. */
+.gallery-img-inner {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Image hover — smooth scale with luxury timing */
+.gallery-img-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.mika-gallery-cell:hover .gallery-img-inner img {
+  transform: scale(1.07);
+  filter: brightness(1.04) saturate(1.05);
+}
+
+/* Pause Ken Burns on hover so the image holds its
+   current position while the scale transition plays */
+.mika-gallery-cell:hover .gallery-img-inner {
+  animation-play-state: paused;
+}
+
+/* Ken Burns — slow ambient drift, unique per cell.
+   Start at scale(1.02) so translate never shows edges. */
+.mika-gallery-cell:nth-child(1) .gallery-img-inner {
+  animation: galleryDrift1 20s ease-in-out infinite alternate;
+}
+.mika-gallery-cell:nth-child(2) .gallery-img-inner {
+  animation: galleryDrift2 25s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
+.mika-gallery-cell:nth-child(3) .gallery-img-inner {
+  animation: galleryDrift3 18s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+.mika-gallery-cell:nth-child(4) .gallery-img-inner {
+  animation: galleryDrift4 22s ease-in-out infinite alternate;
+  animation-delay: -14s;
+}
+
+@keyframes galleryDrift1 {
+  from { transform: scale(1.02) translate(0,    0); }
+  to   { transform: scale(1.06) translate(-1%,  -0.6%); }
+}
+@keyframes galleryDrift2 {
+  from { transform: scale(1.06) translate(0.8%,  0.4%); }
+  to   { transform: scale(1.02) translate(-0.4%, 0); }
+}
+@keyframes galleryDrift3 {
+  from { transform: scale(1.02) translate(-0.5%, 0.5%); }
+  to   { transform: scale(1.06) translate(0.8%,  -0.8%); }
+}
+@keyframes galleryDrift4 {
+  from { transform: scale(1.05) translate(0.3%,  -0.5%); }
+  to   { transform: scale(1.02) translate(-0.8%,  0.3%); }
+}
+
+/* Staggered luxury entrance — slower, deeper translateY
+   than the generic .reveal, giving the grid a sequential
+   unveiling feel as it scrolls into view. */
+.mika-gallery .mika-gallery-cell.reveal {
+  transition: opacity  1000ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js-reveal .mika-gallery .mika-gallery-cell.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.js-reveal .mika-gallery .mika-gallery-cell.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibility: respect motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-img-inner            { animation: none !important; }
+  .gallery-img-inner img        { transition: none !important; }
+  .mika-gallery-cell::after     { transition: none !important; }
+  .mika-gallery-cell:hover .gallery-img-inner img { transform: none; filter: none; }
 }
