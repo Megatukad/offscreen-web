@@ -73,23 +73,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .btn-sm { font-size: 10px; padding: 9px 13px; }
 }
 
-/* ══════════ WORDMARK (echo) ══════════ */
+/* ══════════ WORDMARK (logo) ══════════ */
+/* The logo SVG is used as a mask, so it takes the nav's colour: white on dark, ink on light. */
 .wordmark {
-  position: relative; display: inline-block; line-height: 1;
-  font-family: var(--font-grotesque); font-weight: 700; font-size: 18px; letter-spacing: -0.02em;
+  display: block; height: 26px; aspect-ratio: 1426 / 390; background-color: currentColor;
+  -webkit-mask: url(/assets/brand/offscreen-logo.svg) center / contain no-repeat;
+  mask: url(/assets/brand/offscreen-logo.svg) center / contain no-repeat;
 }
-.wordmark:hover { opacity: 1; }
-.wordmark-ghost {
-  position: absolute; left: 0; top: 0; color: transparent;
-  -webkit-text-stroke: 0.6px var(--grey-500);
-  animation: echoNav 4s ease-in-out infinite;
-}
-.nav-light .wordmark-ghost { -webkit-text-stroke-color: var(--grey-400); }
-.wordmark-solid { position: relative; }
-@keyframes echoNav { 0%, 100% { transform: translate(1.5px, -1.5px); } 50% { transform: translate(3.5px, -3.5px); } }
+.nav-dark .wordmark { color: #fff; }
 @media (max-width: 767px) {
-  .wordmark { font-size: 16px; }
-  .wordmark-ghost { -webkit-text-stroke-width: 0.5px; }
+  .wordmark { height: 22px; }
 }
 
 /* ══════════ NAV ══════════ */
@@ -499,7 +492,6 @@ body.brief-open { overflow: hidden; }
 /* ══════════ REDUCED MOTION ══════════ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .wordmark-ghost { animation: none; transform: translate(2.5px, -2.5px); }
   .js .rv { opacity: 1; transform: none; transition: none; }
   .par { transform: none !important; }
   .js .home-founder-media img, .js .home-founder-shade, .js .fs-ch, .js .home-founder-text .util { transform: none; opacity: 1; transition: none; }
