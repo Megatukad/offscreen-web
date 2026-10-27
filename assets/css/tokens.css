@@ -48,7 +48,7 @@
   /* ——— Font Stacks ——— */
   --font-grotesque:   'Space Grotesk', 'Arial Black', sans-serif;  /* headlines + wordmark */
   --font-mono:        'Space Mono', 'Courier New', monospace;       /* labels, buttons, data */
-  --font-sans:        Helvetica, 'Helvetica Neue', Arial, sans-serif; /* body */
+  --font-sans:        'Work Sans', Helvetica, Arial, sans-serif;     /* body */
 
   /* ——— Font Weights ——— */
   --weight-regular:   400;
