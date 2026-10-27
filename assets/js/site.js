@@ -16,6 +16,50 @@ const FORM_URL = 'https://forms.fillout.com/t/vpHvww8ndgus';
   els.forEach(el => io.observe(el));
 })();
 
+// ── IN-PAGE ANCHOR SCROLL ────────────────────────
+// One eased scroll with a capped duration. Content in and above the target is
+// revealed up front, so nothing slides in while the page is still moving.
+(function () {
+  const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  function revealUpTo(target) {
+    const bottom = target.getBoundingClientRect().top + window.scrollY + window.innerHeight;
+    document.querySelectorAll('.rv:not(.in)').forEach(el => {
+      if (el.getBoundingClientRect().top + window.scrollY < bottom) el.classList.add('in');
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href*="#"]');
+    if (!link || link.classList.contains('skip-link') || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    const url = new URL(link.href, location.href);
+    if (url.pathname !== location.pathname || !url.hash) return;
+    const target = document.getElementById(url.hash.slice(1));
+    if (!target) return;
+    e.preventDefault();
+    history.pushState(null, '', url.hash);
+    revealUpTo(target);
+
+    const startY = window.scrollY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    const endY = Math.min(maxY, target.getBoundingClientRect().top + startY);
+    if (reduceMotion) { window.scrollTo(0, endY); return; }
+    const dist = endY - startY;
+    const duration = Math.min(1100, 450 + Math.abs(dist) * 0.3);
+    const t0 = performance.now();
+    let cancelled = false;
+    const cancel = () => { cancelled = true; };
+    window.addEventListener('wheel', cancel, { once: true, passive: true });
+    window.addEventListener('touchstart', cancel, { once: true, passive: true });
+    (function step(now) {
+      if (cancelled) return;
+      const t = Math.min(1, (now - t0) / duration);
+      window.scrollTo(0, startY + dist * ease(t));
+      if (t < 1) requestAnimationFrame(step);
+    })(t0);
+  });
+})();
+
 // ── PARALLAX + FOOTER WORDMARK REVEAL ────────────
 (function () {
   if (reduceMotion) return;
