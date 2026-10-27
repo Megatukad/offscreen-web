@@ -60,6 +60,114 @@ const FORM_URL = 'https://forms.fillout.com/t/vpHvww8ndgus';
   });
 })();
 
+// ── FOUNDER STATEMENT · LETTER-BY-LETTER REVEAL ──
+// Splits the statement into its rendered lines, then letters, so each letter can
+// flip up from behind its line's mask. Re-split on resize, since the line breaks
+// move with the width.
+(function () {
+  const box = document.querySelector('.home-founder');
+  const p = box && box.querySelector('.founder-statement');
+  if (!p) return;
+  const text = p.textContent.trim();
+  let lastWidth = 0;
+
+  function split() {
+    if (p.offsetWidth === lastWidth) return;
+    lastWidth = p.offsetWidth;
+    p.textContent = '';
+    const words = text.split(/\s+/).map(w => {
+      const s = document.createElement('span');
+      s.textContent = w;
+      p.append(s, ' ');
+      return s;
+    });
+    const lines = [];
+    let top = null;
+    words.forEach(w => {
+      if (w.offsetTop !== top) { lines.push([]); top = w.offsetTop; }
+      lines[lines.length - 1].push(w.textContent);
+    });
+    p.textContent = '';
+    let last = 0;
+    lines.forEach((ws, li) => {
+      const line = document.createElement('span');
+      const inner = document.createElement('span');
+      line.className = 'fs-line';
+      ws.forEach((w, wi) => {
+        const word = document.createElement('span');
+        word.className = 'fs-word';
+        [...w].forEach((c, ci) => {
+          const ch = document.createElement('span');
+          ch.className = 'fs-ch';
+          ch.textContent = c;
+          // lines overlap: each starts a beat after the one above, letters ripple along it
+          last = 0.3 + li * 0.14 + (inner.textContent.length + ci) * 0.012;
+          ch.style.setProperty('--d', last.toFixed(3) + 's');
+          word.appendChild(ch);
+        });
+        inner.appendChild(word);
+        if (wi < ws.length - 1) inner.append(' ');
+      });
+      line.appendChild(inner);
+      p.appendChild(line);
+    });
+    p.setAttribute('aria-label', text);
+    box.style.setProperty('--util-d', (last + 0.3).toFixed(2) + 's');
+  }
+
+  if (reduceMotion || !('IntersectionObserver' in window)) { box.classList.add('is-in'); return; }
+  const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+  fontsReady.then(() => {
+    split();
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(split, 150); });
+  });
+  const io = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { box.classList.add('is-in'); io.disconnect(); }
+  }, { threshold: 0.35 });
+  io.observe(box);
+})();
+
+// ── SITE MOTION · HEADLINE RISES, LABEL DECODE ───
+(function () {
+  const rises = [...document.querySelectorAll('.case-title h1, .svc .title-md, .row-name, .next-title')];
+  const labels = [...document.querySelectorAll('.sec-head .label, .archive-intro .label, .next-text .label, .case-eyebrow, .hero-tag')];
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  rises.forEach((el, i) => {
+    const inner = document.createElement('span');
+    inner.className = 'rise-in';
+    while (el.firstChild) inner.appendChild(el.firstChild);
+    el.appendChild(inner);
+    el.classList.add('rise');
+    if (el.closest('.hero')) el.style.setProperty('--d', '0.5s');
+    else if (el.closest('.svc')) el.style.setProperty('--d', (i % 2) * 0.12 + 's');
+  });
+
+  // mono labels resolve out of random glyphs, left to right
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function decode(el) {
+    const final = el.textContent;
+    el.setAttribute('aria-label', final);
+    const t0 = performance.now(), dur = 300 + final.length * 28;
+    (function frame(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      const fixed = Math.floor(p * final.length);
+      el.textContent = [...final].map((c, i) =>
+        i < fixed || !/[A-Z0-9]/i.test(c) ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0]).join('');
+      if (p < 1) requestAnimationFrame(frame); else el.textContent = final;
+    })(t0);
+  }
+
+  const io = new IntersectionObserver((entries) => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    if (labels.includes(el)) decode(el); else el.classList.add('in');
+    io.unobserve(el);
+  }), { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+  [...rises, ...labels].forEach(el => io.observe(el));
+})();
+
 // ── PARALLAX + FOOTER WORDMARK REVEAL ────────────
 (function () {
   if (reduceMotion) return;
@@ -101,7 +209,7 @@ const FORM_URL = 'https://forms.fillout.com/t/vpHvww8ndgus';
 })();
 
 // ── BRIEF FORM OVERLAY (Fillout) ─────────────────
-// Every "Start your build" link opens the same form in an overlay.
+// Every "Let's talk" link opens the same form in an overlay.
 // Without JS (or with a modifier-click) the link opens the form in a new tab.
 (function () {
   const dialog = document.getElementById('brief');
@@ -114,7 +222,7 @@ const FORM_URL = 'https://forms.fillout.com/t/vpHvww8ndgus';
     if (!body.querySelector('iframe')) {
       const iframe = document.createElement('iframe');
       iframe.src = FORM_URL;
-      iframe.title = 'Start your build — project brief form';
+      iframe.title = "Let's talk — project brief form";
       iframe.allow = 'clipboard-write';
       iframe.addEventListener('load', () => body.querySelector('.brief-loading')?.remove());
       body.appendChild(iframe);

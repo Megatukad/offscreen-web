@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="reveal-footer">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +20,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap">
 <link rel="preload" as="image" href="/assets/work/stoen/offscreen_stoen_hero_16x9.webp">
-<link rel="stylesheet" href="/assets/css/tokens.css?v=6">
-<link rel="stylesheet" href="/assets/css/site.css?v=6">
+<link rel="stylesheet" href="/assets/css/tokens.css?v=15">
+<link rel="stylesheet" href="/assets/css/site.css?v=15">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="page">
+<div class="page" style="background:var(--bg);">
 
 <header class="hero case-hero" data-screen-label="Case Opener">
   <div class="hero-bg par" data-par="0.14">
@@ -38,7 +38,7 @@
     <a href="/" class="wordmark" aria-label="Offscreen home"><span class="wordmark-ghost" aria-hidden="true">OFFSCREEN</span><span class="wordmark-solid">OFFSCREEN</span></a>
     <div class="nav-links">
       <a class="nav-link" href="/#work" style="display:inline;">(← WORK)</a>
-      <a class="btn btn-sm" href="https://forms.fillout.com/t/vpHvww8ndgus" target="_blank" rel="noopener" data-brief>START YOUR BUILD →</a>
+      <a class="btn btn-sm" href="https://forms.fillout.com/t/vpHvww8ndgus" target="_blank" rel="noopener" data-brief>LET'S TALK →</a>
     </div>
   </nav>
 
@@ -99,24 +99,41 @@
       <span class="util">THE FULL ARCHIVE →</span>
     </div>
   </a>
-  <div class="case-foot">
-    <a class="btn btn-sm" href="https://forms.fillout.com/t/vpHvww8ndgus" target="_blank" rel="noopener" data-brief>START YOUR BUILD →</a>
-    <div class="case-foot-row">
-      <a href="/">← OFFSCREEN</a>
-      <span>© 2026 OFFSCREEN</span>
-    </div>
-  </div>
 </section>
 </div>
 
-<dialog id="brief" class="brief" aria-label="Start your build">
+<footer class="footer" data-screen-label="Footer">
+  <div class="footer-links">
+    <div class="footer-col">
+      <span class="util">(SOCIAL)</span>
+      <a href="https://www.instagram.com/offscreen.lab/" target="_blank" rel="noopener">INSTAGRAM →</a>
+    </div>
+    <div class="footer-col">
+      <span class="util">(SITE)</span>
+      <a href="/work/">WORK</a>
+      <a href="https://forms.fillout.com/t/vpHvww8ndgus" target="_blank" rel="noopener" data-brief>CONTACT</a>
+    </div>
+    <div class="footer-col">
+      <span class="util">(CONTACT)</span>
+      <a href="mailto:hello@offscreen.work">HELLO@OFFSCREEN.WORK</a>
+      <span class="muted">WORLDWIDE</span>
+    </div>
+    <div class="footer-col">
+      <span class="util">(LEGAL)</span>
+      <span class="muted">© 2026 OFFSCREEN</span>
+    </div>
+  </div>
+  <div class="bigmark-clip" aria-hidden="true"><div class="bigmark">OFFSCREEN</div></div>
+</footer>
+
+<dialog id="brief" class="brief" aria-label="Let's talk">
   <div class="brief-bar">
-    <span class="label" style="color:var(--grey-400);">// START YOUR BUILD</span>
+    <span class="label" style="color:var(--grey-400);">// LET'S TALK</span>
     <button type="button" class="brief-close">(CLOSE ×)</button>
   </div>
   <div class="brief-body"><span class="brief-loading">LOADING THE BRIEF…</span></div>
 </dialog>
 
-<script src="/assets/js/site.js?v=6"></script>
+<script src="/assets/js/site.js?v=15"></script>
 </body>
 </html>
