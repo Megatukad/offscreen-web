@@ -260,9 +260,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .footer-col button:hover { opacity: 0.7; }
 .footer-col .muted { color: var(--grey-600); }
 .bigmark-clip { overflow: hidden; pointer-events: none; margin: 0 calc(var(--pm) * -1); }
+/* The logo as a mask over the box; the text inside stays as a fallback but is hidden. */
 .bigmark {
-  font-family: var(--font-grotesque); font-weight: 700; font-size: 16.4vw; letter-spacing: -0.04em;
-  line-height: 0.94; color: var(--bone); text-align: center; white-space: nowrap; padding-bottom: 1.2vw;
+  margin: 0 var(--pm) 2.4vw; aspect-ratio: 1426 / 390; background-color: #fff;
+  -webkit-mask: url(/assets/brand/offscreen-logo.svg) center / contain no-repeat;
+  mask: url(/assets/brand/offscreen-logo.svg) center / contain no-repeat;
+  font-size: 0; color: transparent;
 }
 
 /* Desktop + tablet: fixed full-screen footer revealed by scroll */
@@ -285,7 +288,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .footer-col { gap: 10px; }
   .footer-col:last-child { text-align: left; align-items: flex-start; }
   .footer-col .util { font-size: 9px; }
-  .bigmark { font-size: 16vw; padding-bottom: 1.5vw; }
+  .bigmark { margin-bottom: 4vw; }
 }
 
 /* ══════════ LAB ══════════ */
